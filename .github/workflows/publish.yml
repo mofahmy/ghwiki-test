@@ -16,9 +16,10 @@ jobs:
 
       - name: Generate something
         run: |
-          echo '```' >> "wiki/pr.md"
-          echo "some content" >> "wiki/pr.md"
-          echo '```' >> "wiki/pr.md"
+          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo '```' >> "wiki/${pr_number}.md"
+          echo "some content" >> "wiki/${pr_number}.md"
+          echo '```' >> "wiki/{pr_number}.md"
       
       - name: Sync docs to wiki
         uses: Andrew-Chen-Wang/github-wiki-action@v3
