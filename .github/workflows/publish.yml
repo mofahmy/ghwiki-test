@@ -1,0 +1,37 @@
+name: publish
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish_wiki:
+    name: Publish to Wiki
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create publish dir
+        run: mkdir wiki
+
+      - name: Generate something
+        if: github.event_name == 'pull_request'
+        run: |
+          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "${pr_number}"
+          echo '```' >> "wiki/PR-${pr_number}.md"
+          echo "some content" >> "wiki/PR-${pr_number}.md"
+          echo '```' >> "wiki/$PR-{pr_number}.md"
+      
+      - name: Sync docs to wiki
+        if: github.event_name == 'pull_request'
+        uses: Andrew-Chen-Wang/github-wiki-action@v3
+        env:
+          # Make sure you have that / at the end. We use rsync 
+          # WIKI_DIR's default is wiki/
+          WIKI_DIR: "wiki/"
+          GH_TOKEN: ${{ secrets.GHPAT }}
+          GH_MAIL: ${{ secrets.GHEMAIL }}
+          GH_NAME: ${{ github.repository_owner }}
+          REPO: ${{ github.repository }}
+          WIKI_PUSH_MESSAGE: "commit"
