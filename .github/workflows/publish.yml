@@ -10,9 +10,13 @@ jobs:
   publish_wiki:
     name: Publish to Wiki
     runs-on: ubuntu-20.04
-    env:
-      WIKI_TMPDIR: "wiki_tmp"
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set WIKI TMPDIR
+        run: echo "WIKI_TMPDIR=${GITHUB_WORKSPACE}/wiki_tmpdir"
+
       - name: Set PR Number Envar
         run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           
@@ -37,7 +41,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.GHPAT }}
         with:
-          source_file: ${{ env.PR_MD_FILEPATH }}"
+          source_file: ${{ env.PR_MD_FILEPATH }}
           destination_repo: "${{ github.repository }}.wiki"
           destination_branch: "master"
           user_email: "{{ secrets.GHEMAIL }}"
