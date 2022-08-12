@@ -23,7 +23,7 @@ jobs:
           echo "${pr_md_filepath}"
 
           echo '```' >> "${pr_md_filepath}"
-          echo "some other content all together" >> "{pr_md_filepath}"
+          echo "some other content all together" >> "${pr_md_filepath}"
           echo '```' >> "${pr_md_filepath}"
       
       - name: Publish output to wiki
