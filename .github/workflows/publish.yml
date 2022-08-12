@@ -15,6 +15,7 @@ jobs:
         run: mkdir wiki
 
       - name: Generate something
+        if: github.event_name == 'pull_request'
         run: |
           pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${pr_number}"
@@ -23,6 +24,7 @@ jobs:
           echo '```' >> "wiki/$PR-{pr_number}.md"
       
       - name: Sync docs to wiki
+        if: github.event_name == 'pull_request'
         uses: Andrew-Chen-Wang/github-wiki-action@v3
         env:
           # Make sure you have that / at the end. We use rsync 
