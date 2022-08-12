@@ -46,7 +46,7 @@ jobs:
           destination_branch: "master"
           user_email: "pusher@test.invalid"
           user_name: "Pusher"
-          commit_message: "Terraform plan for PR_${PR_NUMBER}_${GITHUB_RUN_ID}"
+          commit_message: "Terraform plan for PR_${{ env.PR_NUMBER}}_${{env. GITHUB_RUN_ID }}"
  
       # - name: Publish output to wiki
       #   uses: docker://decathlon/wiki-page-creator-action:2.0.3
