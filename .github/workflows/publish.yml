@@ -20,7 +20,7 @@ jobs:
           pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${pr_number}"
           echo '```' >> "wiki/PR-${pr_number}.md"
-          echo "some content" >> "wiki/PR-${pr_number}.md"
+          echo "some other content" >> "wiki/PR-${pr_number}.md"
           echo '```' >> "wiki/$PR-{pr_number}.md"
       
       - name: Sync docs to wiki
@@ -34,4 +34,4 @@ jobs:
           GH_MAIL: ${{ secrets.GHEMAIL }}
           GH_NAME: ${{ github.repository_owner }}
           REPO: ${{ github.repository }}
-          WIKI_PUSH_MESSAGE: "commit"
+          WIKI_PUSH_MESSAGE: "output"
