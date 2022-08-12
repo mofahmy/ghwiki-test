@@ -33,7 +33,7 @@ jobs:
           echo "${{ env.PR_MD_FILEPATH }}"
 
           echo '```' >> "${{ env.PR_MD_FILEPATH }}"
-          echo "some other content all together again" >> "${{ env.PR_MD_FILEPATH}}"
+          echo "some other content all together 5" >> "${{ env.PR_MD_FILEPATH}}"
           echo '```' >> "${{ env.PR_MD_FILEPATH}}"
      
       - name: Push PR MD to Wiki
@@ -47,7 +47,12 @@ jobs:
           user_email: "pusher@test.invalid"
           user_name: "Pusher"
           commit_message: "Terraform plan output for PR#${{ env.PR_NUMBER}}"
- 
+
+      - name: Update PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            Updated content of [link](https://github.com/${{ github.repository }}/wiki/PR_${{ env.PR_NUMBER }}
       # - name: Publish output to wiki
       #   uses: docker://decathlon/wiki-page-creator-action:2.0.3
       #   env:
