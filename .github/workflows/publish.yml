@@ -23,7 +23,7 @@ jobs:
           mkdir "${WIKI_TMPDIR}"
 
           
-          pr_md_filepath="${WIKI_TMPDIR}/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+          pr_md_filepath="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
           echo "${pr_md_filepath}"
 
@@ -43,8 +43,6 @@ jobs:
 
       - name: cat test
         run: |
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-
-          pr_md_filepath="${WIKI_TMPDIR}/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+          pr_md_filepath="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
           cat $pr_md_filepath
