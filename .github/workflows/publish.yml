@@ -17,9 +17,9 @@ jobs:
           mkdir wiki_tmp
 
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          pr_md_filename=PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+          pr_md_filename="PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
 
-          echo "${pr_number}"
+          echo "${pr_md_filename}"
           echo '```' >> "wiki_tmp/${pr_md_filename}"
           echo "some other content all together" >> "wiki_tmp/{pr_md_filename}"
           echo '```' >> "wiki_tmp/${pr_md_path}"
