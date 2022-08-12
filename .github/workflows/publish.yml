@@ -23,15 +23,11 @@ jobs:
           echo "some other content" >> "wiki/PR-${pr_number}.md"
           echo '```' >> "wiki/$PR-{pr_number}.md"
       
-      - name: Sync docs to wiki
-        if: github.event_name == 'pull_request'
-        uses: Andrew-Chen-Wang/github-wiki-action@v3
+      - name: Publish output to wiki
+        uses: docker://decathlon/wiki-page-creator-action:2.0.3
         env:
-          # Make sure you have that / at the end. We use rsync 
-          # WIKI_DIR's default is wiki/
-          WIKI_DIR: "wiki/"
-          GH_TOKEN: ${{ secrets.GHPAT }}
-          GH_MAIL: ${{ secrets.GHEMAIL }}
-          GH_NAME: ${{ github.repository_owner }}
-          REPO: ${{ github.repository }}
-          WIKI_PUSH_MESSAGE: "output"
+          GH_PAT: ${{ secrets.GHPAT }}
+          ACTION_MAIL: ${{ secrets.GHEMAIL }}
+          ACTION_NAME: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.repository }}
+          MD_FOLDER: "wiki/"
