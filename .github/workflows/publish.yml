@@ -16,14 +16,16 @@ jobs:
 
       - name: Generate something
         run: |
-          echo "```" > wiki/run.md
-          echo "some content" >> wiki/run.md
-          echo "```" >> wiki/run
+          echo "```" > "${GITHUB_WORKSPACE}/wiki/pr.md"
+          echo "some content" >> "${GITHUB_WORKSPACE}/wiki/pr.md"
+          echo "```" >> "${GITHUB_WORKSPACE}/wiki/pr.md"
       
-      - name: Publish
-        uses: SwiftDocOrg/github-wiki-publish-action@v1
-        with:
-          path: "wiki"
+      - name: Sync docs to wiki
+        uses: Andrew-Chen-Wang/github-wiki-action@v3
         env:
-          GH_PERSONAL_ACCESS_TOKEN: "${{ secrets.GHPAT }}"
-          
+          # Make sure you have that / at the end. We use rsync 
+          # WIKI_DIR's default is wiki/
+          WIKI_DIR: "${GITHUB_WORKSPACE}/wiki/"
+          GH_TOKEN: ${{ secrets.GHPAT }}
+          GH_MAIL: ${{ secrets.GHEMAIL }}
+          GH_NAME: ${{ github.repository_owner }}
