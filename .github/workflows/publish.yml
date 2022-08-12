@@ -16,7 +16,8 @@ jobs:
 
       - name: Generate something
         run: |
-          echo "```" > "wiki/pr.md"
+          echo "# Heading" > "wiki/pr.md"
+          echo "```" >> "wiki/pr.md"
           echo "some content" >> "wiki/pr.md"
           echo "```" >> "wiki/pr.md"
       
