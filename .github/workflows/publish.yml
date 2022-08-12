@@ -16,8 +16,8 @@ jobs:
 
       - name: Generate something
         run: |
-          echo "```" > wiki/run
-          echo "some content" >> wiki/run
+          echo "```" > wiki/run.md
+          echo "some content" >> wiki/run.md
           echo "```" >> wiki/run
       
       - name: Publish
