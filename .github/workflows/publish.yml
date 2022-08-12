@@ -33,7 +33,7 @@ jobs:
           echo "${{ env.PR_MD_FILEPATH }}"
 
           echo '```' >> "${{ env.PR_MD_FILEPATH }}"
-          echo "some other content all together 5" >> "${{ env.PR_MD_FILEPATH}}"
+          echo "some other content all together 5-2" >> "${{ env.PR_MD_FILEPATH}}"
           echo '```' >> "${{ env.PR_MD_FILEPATH}}"
      
       - name: Push PR MD to Wiki
@@ -52,7 +52,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            Updated content of [link](https://github.com/${{ github.repository }}/wiki/PR_${{ env.PR_NUMBER }}
+            Updated content of [link](https://github.com/${{ github.repository }}/wiki/PR_${{ env.PR_NUMBER }})
       # - name: Publish output to wiki
       #   uses: docker://decathlon/wiki-page-creator-action:2.0.3
       #   env:
