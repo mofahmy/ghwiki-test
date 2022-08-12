@@ -14,15 +14,15 @@ jobs:
       - name: Generate something
         if: github.event_name == 'pull_request'
         run: |
-          mkdir wiki
+          mkdir wiki_tmp
 
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          pr_md_path="wiki/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+          pr_md_filename=PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
 
           echo "${pr_number}"
-          echo '```' >> "${pr_md_path}"
-          echo "some other content all together" >> "{pr_md_path}"
-          echo '```' >> "${pr_md_path}"
+          echo '```' >> "wiki_tmp/${pr_md_filename}"
+          echo "some other content all together" >> "wiki_tmp/{pr_md_filename}"
+          echo '```' >> "wiki_tmp/${pr_md_path}"
       
       - name: Publish output to wiki
         uses: docker://decathlon/wiki-page-creator-action:2.0.3
@@ -32,4 +32,4 @@ jobs:
           ACTION_NAME: ${{ github.repository_owner }}
           OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
-          MD_FOLDER: "wiki/"
+          MD_FOLDER: "wiki_tmp/"
