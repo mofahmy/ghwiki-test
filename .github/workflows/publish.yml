@@ -31,16 +31,27 @@ jobs:
           echo '```' >> "${{ env.PR_MD_FILEPATH }}"
           echo "some other content all together again" >> "${{ env.PR_MD_FILEPATH}}"
           echo '```' >> "${{ env.PR_MD_FILEPATH}}"
-      
-      - name: Publish output to wiki
-        uses: docker://decathlon/wiki-page-creator-action:2.0.3
+     
+      - name: Push PR MD to Wiki
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
-          GH_PAT: ${{ secrets.GHPAT }}
-          ACTION_MAIL: ${{ secrets.GHEMAIL }}
-          ACTION_NAME: ${{ github.repository_owner }}
-          OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.event.repository.name }}
-          MD_FOLDER: ${{ env.WIKI_TMPDIR }}
+          API_TOKEN_GITHUB: ${{ secrets.GHPAT }}
+        with:
+          source_file: "${PR_MD_FILEPATH}"
+          destination_repo: "${{ github.repository }}.wiki"
+          user_email: "{{ secrets.GHEMAIL }}"
+          user_name: "Pusher"
+          commit_message: "Terraform plan for PR_${PR_NUMBER}_${GITHUB_RUN_ID}"
+ 
+      # - name: Publish output to wiki
+      #   uses: docker://decathlon/wiki-page-creator-action:2.0.3
+      #   env:
+      #     GH_PAT: ${{ secrets.GHPAT }}
+      #     ACTION_MAIL: ${{ secrets.GHEMAIL }}
+      #     ACTION_NAME: ${{ github.repository_owner }}
+      #     OWNER: ${{ github.repository_owner }}
+      #     REPO_NAME: ${{ github.event.repository.name }}
+      #     MD_FOLDER: ${{ env.WIKI_TMPDIR }}
 
       - name: cat test
         run: |
