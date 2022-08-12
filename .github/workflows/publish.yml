@@ -39,6 +39,7 @@ jobs:
         with:
           source_file: "${PR_MD_FILEPATH}"
           destination_repo: "${{ github.repository }}.wiki"
+          destination_branch: "master"
           user_email: "{{ secrets.GHEMAIL }}"
           user_name: "Pusher"
           commit_message: "Terraform plan for PR_${PR_NUMBER}_${GITHUB_RUN_ID}"
