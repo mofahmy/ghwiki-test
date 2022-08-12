@@ -16,7 +16,7 @@ jobs:
       - name: Set PR Number Envar
         run: |
           echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
-          echo "PR_MD_FILEPATH=${WIKI_TMPDIR}/PR_${{ env.PR_NUMBER }}_${GITHUB_RUN_ID}.md"
+          echo "PR_MD_FILEPATH=${WIKI_TMPDIR}/PR_${{ env.PR_NUMBER }}_${GITHUB_RUN_ID}.md" >> $GITHUB_ENV
 
       - name: Generate something
         if: github.event_name == 'pull_request'
