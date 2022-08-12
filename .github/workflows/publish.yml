@@ -1,0 +1,29 @@
+name: tf-modules-release
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish_wiki:
+    name: Publish to Wiki
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create publish dir
+        run: mkdir wiki
+
+      - name: Generate something
+        run: |
+          echo "```" > wiki/run
+          echo "some content" >> wiki/run
+          echo "```" >> wiki/run
+      
+      - name: Publish
+        uses: SwiftDocOrg/github-wiki-publish-action@v1
+        with:
+          path: "wiki"
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: "${{ secrets.GHPAT }}"
+          
