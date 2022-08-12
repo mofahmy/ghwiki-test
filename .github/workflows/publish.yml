@@ -30,3 +30,4 @@ jobs:
           GH_MAIL: ${{ secrets.GHEMAIL }}
           GH_NAME: ${{ github.repository_owner }}
           REPO: ${{ github.repository }}
+          WIKI_PUSH_MESSAGE: "commit"
