@@ -20,7 +20,7 @@ jobs:
           pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${pr_number}"
           echo '```' >> "wiki/PR-${pr_number}.md"
-          echo "some other content 2" >> "wiki/PR-${pr_number}.md"
+          echo "some other content all together" >> "wiki/PR-${pr_number}.md"
           echo '```' >> "wiki/$PR-{pr_number}.md"
       
       - name: Publish output to wiki
