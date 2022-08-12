@@ -13,12 +13,15 @@ jobs:
     env:
       WIKI_TMPDIR: "wiki_tmp"
     steps:
+      - name: Set PR Number Envar
+        run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number \"$GITHUB_EVENT_PATH\") >> $GITHUB_ENV
+
+
       - name: Generate something
         if: github.event_name == 'pull_request'
         run: |
           mkdir "${WIKI_TMPDIR}"
 
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           
           pr_md_filepath="${WIKI_TMPDIR}/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
 
