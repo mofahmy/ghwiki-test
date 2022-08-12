@@ -14,20 +14,22 @@ jobs:
       WIKI_TMPDIR: "wiki_tmp"
     steps:
       - name: Set PR Number Envar
-        run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+        run: |
+          echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+          echo "PR_MD_FILEPATH=${WIKI_TMPDIR}/PR_${{ env.PR_NUMBER }}_${GITHUB_RUN_ID}.md"
 
       - name: Generate something
         if: github.event_name == 'pull_request'
         run: |
           mkdir "${WIKI_TMPDIR}"
 
-          pr_md_filepath="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
+          #PR_MD_FILEPATH="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
-          echo "${pr_md_filepath}"
+          echo "${PR_MD_FILEPATH}"
 
-          echo '```' >> "${pr_md_filepath}"
-          echo "some other content all together again" >> "${pr_md_filepath}"
-          echo '```' >> "${pr_md_filepath}"
+          echo '```' >> "${PR_MD_FILEPATH}"
+          echo "some other content all together again" >> "${PR_MD_FILEPATH}"
+          echo '```' >> "${PR_MD_FILEPATH}"
       
       - name: Publish output to wiki
         uses: docker://decathlon/wiki-page-creator-action:2.0.3
@@ -41,6 +43,6 @@ jobs:
 
       - name: cat test
         run: |
-          pr_md_filepath="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
+          #PR_MD_FILEPATH="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
-          cat $pr_md_filepath
+          cat $PR_MD_FILEPATH
