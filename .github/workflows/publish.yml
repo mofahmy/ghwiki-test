@@ -11,17 +11,18 @@ jobs:
     name: Publish to Wiki
     runs-on: ubuntu-20.04
     steps:
-      - name: Create publish dir
-        run: mkdir wiki
-
       - name: Generate something
         if: github.event_name == 'pull_request'
         run: |
-          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          mkdir wiki
+
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          pr_md_path="wiki/PR-${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+
           echo "${pr_number}"
-          echo '```' >> "wiki/PR-${pr_number}.md"
-          echo "some other content all together" >> "wiki/PR-${pr_number}.md"
-          echo '```' >> "wiki/$PR-{pr_number}.md"
+          echo '```' >> "${pr_md_path}"
+          echo "some other content all together" >> "{pr_md_path}"
+          echo '```' >> "${pr_md_path}"
       
       - name: Publish output to wiki
         uses: docker://decathlon/wiki-page-creator-action:2.0.3
