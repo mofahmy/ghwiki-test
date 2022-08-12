@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set WIKI TMPDIR
-        run: echo "WIKI_TMPDIR=${GITHUB_WORKSPACE}/wiki_tmpdir"
+        run: echo "WIKI_TMPDIR=${GITHUB_WORKSPACE}/wiki_tmpdir" >> $GITHUB_ENV
 
       - name: Set PR Number Envar
         run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
