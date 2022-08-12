@@ -1,4 +1,4 @@
-name: tf-modules-release
+name: publish
 
 on:
   pull_request:
