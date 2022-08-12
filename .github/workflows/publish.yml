@@ -16,9 +16,9 @@ jobs:
 
       - name: Generate something
         run: |
-          echo "```" > "${GITHUB_WORKSPACE}/wiki/pr.md"
-          echo "some content" >> "${GITHUB_WORKSPACE}/wiki/pr.md"
-          echo "```" >> "${GITHUB_WORKSPACE}/wiki/pr.md"
+          echo "```" > "wiki/pr.md"
+          echo "some content" >> "wiki/pr.md"
+          echo "```" >> "wiki/pr.md"
       
       - name: Sync docs to wiki
         uses: Andrew-Chen-Wang/github-wiki-action@v3
