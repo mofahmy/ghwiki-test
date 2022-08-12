@@ -29,5 +29,6 @@ jobs:
           GH_PAT: ${{ secrets.GHPAT }}
           ACTION_MAIL: ${{ secrets.GHEMAIL }}
           ACTION_NAME: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
           MD_FOLDER: "wiki/"
