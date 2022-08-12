@@ -10,9 +10,13 @@ jobs:
   publish_wiki:
     name: Publish to Wiki
     runs-on: ubuntu-20.04
-    env:
-      WIKI_TMPDIR: "wiki_tmp"
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set WIKI TMPDIR
+        run: echo "WIKI_TMPDIR=${GITHUB_WORKSPACE}/wiki_tmpdir" >> $GITHUB_ENV
+
       - name: Set PR Number Envar
         run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           
@@ -31,16 +35,28 @@ jobs:
           echo '```' >> "${{ env.PR_MD_FILEPATH }}"
           echo "some other content all together again" >> "${{ env.PR_MD_FILEPATH}}"
           echo '```' >> "${{ env.PR_MD_FILEPATH}}"
-      
-      - name: Publish output to wiki
-        uses: docker://decathlon/wiki-page-creator-action:2.0.3
+     
+      - name: Push PR MD to Wiki
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
-          GH_PAT: ${{ secrets.GHPAT }}
-          ACTION_MAIL: ${{ secrets.GHEMAIL }}
-          ACTION_NAME: ${{ github.repository_owner }}
-          OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.event.repository.name }}
-          MD_FOLDER: ${{ env.WIKI_TMPDIR }}
+          API_TOKEN_GITHUB: ${{ secrets.GHPAT }}
+        with:
+          source_file: ${{ env.PR_MD_FILEPATH }}
+          destination_repo: "${{ github.repository }}.wiki"
+          destination_branch: "master"
+          user_email: "pusher@test.invalid"
+          user_name: "Pusher"
+          commit_message: "Terraform plan output for PR#${{ env.PR_NUMBER}}"
+ 
+      # - name: Publish output to wiki
+      #   uses: docker://decathlon/wiki-page-creator-action:2.0.3
+      #   env:
+      #     GH_PAT: ${{ secrets.GHPAT }}
+      #     ACTION_MAIL: ${{ secrets.GHEMAIL }}
+      #     ACTION_NAME: ${{ github.repository_owner }}
+      #     OWNER: ${{ github.repository_owner }}
+      #     REPO_NAME: ${{ github.event.repository.name }}
+      #     MD_FOLDER: ${{ env.WIKI_TMPDIR }}
 
       - name: cat test
         run: |
