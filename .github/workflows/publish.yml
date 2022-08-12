@@ -10,6 +10,8 @@ jobs:
   publish_wiki:
     name: Publish to Wiki
     runs-on: ubuntu-20.04
+    env:
+      WIKI_TMPDIR: "wiki_tmp"
     steps:
       - name: Generate something
         if: github.event_name == 'pull_request'
@@ -18,7 +20,7 @@ jobs:
 
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           
-          pr_md_filepath="wiki_tmp/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+          pr_md_filepath="${WIKI_TMP_DIR}/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
 
           echo "${pr_md_filepath}"
 
@@ -35,3 +37,11 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
           MD_FOLDER: "wiki_tmp/"
+
+      - name: cat test
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+
+          pr_md_filepath="wiki_tmp/PR_${PR_NUMBER}_${GITHUB_RUN_ID}.md"
+
+          cat $pr_md_filepath
