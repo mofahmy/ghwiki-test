@@ -25,11 +25,11 @@ jobs:
 
           #PR_MD_FILEPATH="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
-          echo "${PR_MD_FILEPATH}"
+          echo "${{ env.PR_MD_FILEPATH }}"
 
-          echo '```' >> "${PR_MD_FILEPATH}"
-          echo "some other content all together again" >> "${PR_MD_FILEPATH}"
-          echo '```' >> "${PR_MD_FILEPATH}"
+          echo '```' >> "${{ env.PR_MD_FILEPATH }}"
+          echo "some other content all together again" >> "${{ env.PR_MD_FILEPATH}}"
+          echo '```' >> "${{ env.PR_MD_FILEPATH}}"
       
       - name: Publish output to wiki
         uses: docker://decathlon/wiki-page-creator-action:2.0.3
@@ -45,4 +45,4 @@ jobs:
         run: |
           #PR_MD_FILEPATH="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
-          cat $PR_MD_FILEPATH
+          cat ${{ env.PR_MD_FILEPATH }}
