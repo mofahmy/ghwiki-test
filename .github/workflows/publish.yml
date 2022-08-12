@@ -16,19 +16,17 @@ jobs:
       - name: Set PR Number Envar
         run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
 
-
       - name: Generate something
         if: github.event_name == 'pull_request'
         run: |
           mkdir "${WIKI_TMPDIR}"
 
-          
           pr_md_filepath="${WIKI_TMPDIR}/PR_${{env.PR_NUMBER}}_${GITHUB_RUN_ID}.md"
 
           echo "${pr_md_filepath}"
 
           echo '```' >> "${pr_md_filepath}"
-          echo "some other content all together" >> "${pr_md_filepath}"
+          echo "some other content all together again" >> "${pr_md_filepath}"
           echo '```' >> "${pr_md_filepath}"
       
       - name: Publish output to wiki
