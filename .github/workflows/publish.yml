@@ -40,7 +40,7 @@ jobs:
           ACTION_NAME: ${{ github.repository_owner }}
           OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
-          MD_FOLDER: "wiki_tmp/"
+          MD_FOLDER: ${{ env.WIKI_TMPDIR }}
 
       - name: cat test
         run: |
